@@ -16,6 +16,16 @@ class HomeController extends Controller
      */
     public function index()
     {
+        return view('user.home');
+    }
+
+
+
+
+
+
+    public function home()
+    {
         if(Auth::id()){
             if (Auth::user()->usertype == '1') {
                 return view('user.home');
