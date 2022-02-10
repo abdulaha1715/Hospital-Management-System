@@ -1821,6 +1821,24 @@ select {
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
+.formLabel {
+  margin-bottom: 0.25rem;
+  display: block;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+.formInput {
+  width: 100%;
+  border-radius: 0.125rem;
+  padding: 1rem;
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+.min-h-110 {
+    min-height: 110px;
+}
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
