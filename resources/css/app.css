@@ -10,3 +10,7 @@
 .formInput {
     @apply w-full rounded-sm text-black p-4
 }
+
+.min-h-110 {
+    min-height: 110px;
+}

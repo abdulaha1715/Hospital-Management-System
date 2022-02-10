@@ -1582,9 +1582,6 @@ select {
 .pb-0 {
   padding-bottom: 0px;
 }
-.pr-0 {
-  padding-right: 0px;
-}
 .text-left {
   text-align: left;
 }
@@ -1838,6 +1835,9 @@ select {
   padding: 1rem;
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+.min-h-110 {
+    min-height: 110px;
 }
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
