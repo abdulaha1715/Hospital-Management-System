@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,10 @@ Route::get('/', function () {
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/home', [HomeController::class, 'home']);
+
+Route::get('/add-new-doctor', [AdminController::class, 'add_doctor_view']);
+
+Route::post('/store', [AdminController::class, 'store']);
 
 // Route::resource('task', TaskController::class);
 
