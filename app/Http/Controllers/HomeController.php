@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,11 +28,6 @@ class HomeController extends Controller
         }
     }
 
-
-
-
-
-
     public function home()
     {
         if(Auth::id()){
@@ -47,6 +43,59 @@ class HomeController extends Controller
             return redirect()->back();
         }
 
+    }
+
+    public function getAppointment(Request $request) {
+
+        $request->validate([
+            'name'       => ['required', 'max:255', 'string'],
+            'email'      => ['max:255', 'string', 'email',],
+            'appdate'      => ['max:255', 'string'],
+            'doctor' => ['not_in:none', 'string'],
+            'phone'      => ['max:255', 'string']
+        ]);
+
+        $user_id = null;
+
+        if (Auth::id()) {
+            $user_id = Auth::user()->id;
+        }
+
+        Appointment::create([
+            'name'       => $request->name,
+            'email'      => $request->email,
+            'appdate'    => $request->appdate,
+            'doctor'     => $request->doctor,
+            'phone'      => $request->phone,
+            'message'    => $request->message,
+            'app_status' => "In Progress",
+            'user_id'    => $user_id
+        ]);
+
+        return redirect()->back()->with('appsuccess', "Appoinment Added!");
+
+    }
+
+    public function myAppointment() {
+        if (Auth::id()) {
+            $user_id = Auth::user()->id;
+
+            $user_appoinments = Appointment::where('user_id', $user_id)->orderBy('id','DESC')->get();
+
+            return view('user.my-appoinment')->with([
+                'user_appoinments' => $user_appoinments
+            ]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function cancleAppointment($id) {
+        $cancle_appoinment = Appointment::find($id);
+
+        $cancle_appoinment->delete();
+
+        return redirect()->back();
     }
 
     /**

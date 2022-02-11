@@ -25,6 +25,22 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/home', [HomeController::class, 'home']);
 
+Route::post('/get-appointment', [HomeController::class, 'getAppointment']);
+
+Route::get('/my-appointment', [HomeController::class, 'myAppointment']);
+
+Route::get('/cancle-appointment/{id}', [HomeController::class, 'cancleAppointment']);
+
+
+
+
+
+
+
+
+
+
+
 Route::get('/add-new-doctor', [AdminController::class, 'add_doctor_view']);
 
 Route::post('/store', [AdminController::class, 'store']);
