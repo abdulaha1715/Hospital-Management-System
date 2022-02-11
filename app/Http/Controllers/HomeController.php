@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,11 +28,6 @@ class HomeController extends Controller
         }
     }
 
-
-
-
-
-
     public function home()
     {
         if(Auth::id()){
@@ -46,6 +42,31 @@ class HomeController extends Controller
         } else {
             return redirect()->back();
         }
+
+    }
+
+    public function getAppointment(Request $request) {
+
+        $request->validate([
+            'name'       => ['required', 'max:255', 'string'],
+            'email'      => ['max:255', 'string', 'email',],
+            'appdate'      => ['max:255', 'string'],
+            'doctor' => ['not_in:none', 'string'],
+            'phone'      => ['max:255', 'string']
+        ]);
+
+        Appointment::create([
+            'name'       => $request->name,
+            'email'      => $request->email,
+            'appdate'    => $request->appdate,
+            'doctor'     => $request->doctor,
+            'phone'      => $request->phone,
+            'message'    => $request->message,
+            'app_status' => "In Progress",
+            'user_id'    => Auth::user()->id
+        ]);
+
+        return redirect()->back()->with('appsuccess', "Appoinment Added!");
 
     }
 

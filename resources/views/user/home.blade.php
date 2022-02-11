@@ -104,6 +104,13 @@
     </nav>
   </header>
 
+    @if (session()->has('appsuccess'))
+        <div class="alert alert-success alert-dismissible flex justify-between pr-4 text-xl align-items-center">
+            <strong>{{ session()->get('appsuccess') }}</strong>
+            <a href="#" class="close text-4xl" data-dismiss="alert" aria-label="close">&times;</a>
+        </div>
+    @endif
+
   <div class="page-hero bg-image overlay-dark" style="background-image: url(../assets/img/bg_image_1.jpg);">
     <div class="hero-section">
       <div class="container text-center wow zoomIn">
