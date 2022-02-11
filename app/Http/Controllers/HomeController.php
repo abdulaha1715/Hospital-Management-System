@@ -55,6 +55,12 @@ class HomeController extends Controller
             'phone'      => ['max:255', 'string']
         ]);
 
+        $user_id = null;
+
+        if (Auth::id()) {
+            $user_id = Auth::user()->id;
+        }
+
         Appointment::create([
             'name'       => $request->name,
             'email'      => $request->email,
@@ -63,7 +69,7 @@ class HomeController extends Controller
             'phone'      => $request->phone,
             'message'    => $request->message,
             'app_status' => "In Progress",
-            'user_id'    => Auth::user()->id
+            'user_id'    => $user_id
         ]);
 
         return redirect()->back()->with('appsuccess', "Appoinment Added!");
