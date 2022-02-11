@@ -27,6 +27,10 @@ Route::get('/home', [HomeController::class, 'home']);
 
 Route::post('/get-appointment', [HomeController::class, 'getAppointment']);
 
+Route::get('/my-appointment', [HomeController::class, 'myAppointment']);
+
+Route::get('/cancle-appointment/{id}', [HomeController::class, 'cancleAppointment']);
+
 
 
 

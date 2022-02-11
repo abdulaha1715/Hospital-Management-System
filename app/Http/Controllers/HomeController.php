@@ -76,6 +76,28 @@ class HomeController extends Controller
 
     }
 
+    public function myAppointment() {
+        if (Auth::id()) {
+            $user_id = Auth::user()->id;
+
+            $user_appoinments = Appointment::where('user_id', $user_id)->orderBy('id','DESC')->get();
+
+            return view('user.my-appoinment')->with([
+                'user_appoinments' => $user_appoinments
+            ]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function cancleAppointment($id) {
+        $cancle_appoinment = Appointment::find($id);
+
+        $cancle_appoinment->delete();
+
+        return redirect()->back();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
