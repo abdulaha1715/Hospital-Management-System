@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -18,8 +19,43 @@ class AdminController extends Controller
         //
     }
 
+    public function all_doctors() {
+        return view('admin.all-doctors');
+    }
+
     public function add_doctor_view() {
         return view('admin.add-doctor');
+    }
+
+    public function all_appointments() {
+        $appointments = Appointment::all();
+        return view('admin.all-appointments')->with([
+            'appointments' => $appointments
+        ]);
+    }
+
+    public function add_appointment_view() {
+        return view('admin.add-appointment');
+    }
+
+    public function appointment_approved($id) {
+        $appoinment = Appointment::find($id);
+
+        $appoinment->app_status = "Approved";
+
+        $appoinment->save();
+
+        return redirect()->back();
+    }
+
+    public function appointment_cancelled($id) {
+        $appoinment = Appointment::find($id);
+
+        $appoinment->app_status = "Cancelled";
+
+        $appoinment->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -38,7 +74,7 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function new_doctor_store(Request $request)
     {
         $request->validate([
             'name'       => ['required', 'max:255', 'string'],

@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function index()
     {
         if(Auth::id()){
-            return redirect('home');
+            return redirect()->route('home');
         } else {
             $data = Doctor::all();
             return view('user.home')->with([
@@ -48,11 +48,11 @@ class HomeController extends Controller
     public function getAppointment(Request $request) {
 
         $request->validate([
-            'name'       => ['required', 'max:255', 'string'],
-            'email'      => ['max:255', 'string', 'email',],
-            'appdate'      => ['max:255', 'string'],
-            'doctor' => ['not_in:none', 'string'],
-            'phone'      => ['max:255', 'string']
+            'name'    => ['required', 'max:255', 'string'],
+            'email'   => ['max:255', 'string', 'email',],
+            'appdate' => ['max:255', 'string'],
+            'doctor'  => ['not_in:none', 'string'],
+            'phone'   => ['max:255', 'string']
         ]);
 
         $user_id = null;
@@ -90,7 +90,7 @@ class HomeController extends Controller
         }
     }
 
-    public function cancleAppointment($id) {
+    public function cancelAppointment($id) {
         $cancle_appoinment = Appointment::find($id);
 
         $cancle_appoinment->delete();

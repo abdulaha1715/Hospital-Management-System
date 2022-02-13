@@ -20,30 +20,34 @@ Route::get('/', function () {
 });
 
 
+// Forentend Routes
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('site-url');
 
-Route::get('/home', [HomeController::class, 'home']);
+Route::get('/home', [HomeController::class, 'home'])->name('home');
 
-Route::post('/get-appointment', [HomeController::class, 'getAppointment']);
+Route::post('/get-appointment', [HomeController::class, 'getAppointment'])->name('get-appointment');
 
-Route::get('/my-appointment', [HomeController::class, 'myAppointment']);
+Route::get('/my-appointments', [HomeController::class, 'myAppointment'])->name('my-appointments');
 
-Route::get('/cancle-appointment/{id}', [HomeController::class, 'cancleAppointment']);
-
-
-
+Route::get('/cancel-appointment/{id}', [HomeController::class, 'cancelAppointment'])->name('cancel-appointment');
 
 
 
+// Cancelled
 
+// Backend Routes
 
+Route::get('/all-doctors', [AdminController::class, 'all_doctors'])->name('all-doctors');
+Route::get('/add-new-doctor', [AdminController::class, 'add_doctor_view'])->name('add-new-doctor');
 
+Route::get('/all-appointments', [AdminController::class, 'all_appointments'])->name('all-appointments');
+Route::get('/add-new-appointment', [AdminController::class, 'add_appointment_view'])->name('add-new-appointment');
+Route::get('/add-new-appointment', [AdminController::class, 'add_appointment_view'])->name('add-new-appointment');
+Route::get('/appointment-approved/{id}', [AdminController::class, 'appointment_approved'])->name('appointment-approved');
+Route::get('/cancel-approved/{id}', [AdminController::class, 'appointment_cancelled'])->name('appointment-cancelled');
 
-
-Route::get('/add-new-doctor', [AdminController::class, 'add_doctor_view']);
-
-Route::post('/store', [AdminController::class, 'store']);
+Route::post('/new-doctor-store', [AdminController::class, 'new_doctor_store'])->name('new-doctor-store');
 
 // Route::resource('task', TaskController::class);
 
