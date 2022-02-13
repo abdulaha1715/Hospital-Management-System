@@ -50,7 +50,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}"><span class="text-primary">One</span>-Health</a>
+        <a class="navbar-brand" href="{{ route('site-url') }}"><span class="text-primary">One</span>-Health</a>
 
         <form action="#">
           <div class="input-group input-navbar">
@@ -68,7 +68,7 @@
         <div class="collapse navbar-collapse" id="navbarSupport">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="{{ url('/') }}">Home</a>
+              <a class="nav-link" href="{{ route('site-url') }}">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="about.html">About Us</a>
@@ -86,7 +86,7 @@
             @if (Route::has('login'))
                 @auth
                 <li class="nav-item">
-                  <a class="nav-link bg-green-500 text-white" href="{{ url('my-appointment') }}">My Appiontment</a>
+                  <a class="nav-link bg-green-500 text-white" href="{{ route('my-appointments') }}">My Appiontment</a>
                 </li>
                 <x-app-layout></x-app-layout>
             @else

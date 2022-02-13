@@ -43,7 +43,7 @@
                                     </div>
                                 @endif
 
-                                <form action="{{ route('new-doctor-store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ url('store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="flex mt-6">

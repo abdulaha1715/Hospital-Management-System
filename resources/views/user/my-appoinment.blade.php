@@ -30,7 +30,7 @@
                             <td>{{ $user_appoinment->message }}</td>
                             <td>{{ $user_appoinment->app_status }}</td>
                             <td class="text-center">
-                                <a class="text-bold bg-red-500 hover:bg-red-600 inline-block text-white dec text-decoration-none py-1 px-4" href="{{ url('cancle-appointment', $user_appoinment->id) }}" onclick="return confirm('Are you sure to delete this?')">Delete</a>
+                                <a class="text-bold bg-red-500 hover:bg-red-600 inline-block text-white dec text-decoration-none py-1 px-4" href="{{ route('cancel-appointment', $user_appoinment->id) }}" onclick="return confirm('Are you sure to delete this?')">Delete</a>
                             </td>
                         </tr>
                     @endforeach

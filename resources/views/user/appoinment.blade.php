@@ -2,7 +2,7 @@
     <div class="container">
       <h1 class="text-center wow fadeInUp text-4xl">Make an Appointment</h1>
 
-      <form class="main-form" action="{{ url('get-appointment') }}" method="POST">
+      <form class="main-form" action="{{ route('get-appointment') }}" method="POST">
         @csrf
         <div class="row mt-5 ">
           <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
@@ -18,7 +18,7 @@
             <select name="doctor" id="departement" class="custom-select">
                 <option value="none">Select Doctor</option>
                 @foreach ($doctors as $doctor)
-                    <option value="general" class="capitalize">Dr. {{ $doctor->name }} - {{ $doctor->specialist }}</option>
+                    <option value="{{ $doctor->name }}" class="capitalize">Dr. {{ $doctor->name }} - {{ $doctor->specialist }}</option>
                 @endforeach
             </select>
           </div>
