@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 Route::get('/', [HomeController::class, 'index'])->name('site-url');
 
-Route::get('/home', [HomeController::class, 'home'])->name('home');
+Route::get('/home', [HomeController::class, 'home'])->name('home')->middleware('auth', 'verified');
 
 Route::post('/get-appointment', [HomeController::class, 'getAppointment'])->name('get-appointment');
 
