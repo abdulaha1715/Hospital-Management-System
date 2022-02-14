@@ -20,7 +20,10 @@ class AdminController extends Controller
     }
 
     public function all_doctors() {
-        return view('admin.all-doctors');
+        $doctors = Doctor::all();
+        return view('admin.all-doctors')->with([
+            'doctors' => $doctors
+        ]);
     }
 
     public function add_doctor_view() {
@@ -101,6 +104,19 @@ class AdminController extends Controller
         ]);
 
         return redirect()->back()->with('success', "Doctor Added Successfully!");
+    }
+
+
+    public function update_doctor_info() {
+
+    }
+
+    public function delete_doctor_info($id) {
+        $doctor = Doctor::find($id);
+
+        $doctor->delete();
+
+        return redirect()->back()->with('success', "Doctor Deleted Successfully!");
     }
 
     /**

@@ -24,7 +24,7 @@
             <div class="content-wrapper">
                 <div>
                     <div class="flex justify-between">
-                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        <h2 class="font-semibold text-xl text-gray-800 leading-tight add-class">
                             {{ __('Add New Appointment') }}
                         </h2>
                         <a href=""class="border border-emerald-400 px-3 py-1">Back</a>

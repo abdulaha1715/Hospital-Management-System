@@ -7,6 +7,10 @@
     @apply cursor-pointer block text-2xl mb-1 font-bold
 }
 
+.add-class {
+    @apply cursor-pointer block text-2xl mb-1 font-bold text-white
+}
+
 .formInput {
     @apply w-full rounded-sm text-black p-4
 }
