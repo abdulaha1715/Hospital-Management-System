@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Corona Admin</title>
 
+    <base href="/public">
+
     @include('admin.css-style')
 
   </head>
@@ -25,7 +27,7 @@
                 <div>
                     <div class="flex justify-between">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight add-class">
-                            {{ __('Add New Doctor') }}
+                            {{ __('Edit Doctor') }}
                         </h2>
                         <a href=""class="border border-emerald-400 px-3 py-1">Back</a>
                     </div>
@@ -36,20 +38,14 @@
                         <div class="overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 border-b border-gray-200">
 
-                                @if (session()->has('success'))
-                                    <div class="alert alert-success alert-dismissible flex justify-between pr-4 text-xl align-items-center">
-                                        <strong>{{ session()->get('success') }}</strong>
-                                        <a href="#" class="close text-4xl" data-dismiss="alert" aria-label="close">&times;</a>
-                                    </div>
-                                @endif
-
-                                <form action="{{ url('store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('doctor-update', $doctor->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
+                                    {{-- @method('PUT') --}}
 
                                     <div class="flex mt-6">
                                         <div class="flex-1 mr-4">
                                             <label for="name" class="formLabel">Name</label>
-                                            <input type="text" name="name" class="formInput" value="{{ old('name') }}">
+                                            <input type="text" name="name" class="formInput" value="{{ $doctor->name }}">
 
                                             @error('name')
                                                 <p class="text-red-700 text-sm">{{ $message }}</p>
@@ -59,10 +55,10 @@
                                         <div class="flex-1 mr-4">
                                             <label for="specialist" class="formLabel">Specialist</label>
                                             <select name="specialist" id="specialist" class="formInput">
-                                                <option value="none">Select Specialist</option>
-                                                    <option value="pediatricians">Pediatricians</option>
-                                                    <option value="allergists">Allergists</option>
-                                                    <option value="dermatologists">Dermatologists</option>
+                                                <option value="none" {{ $doctor->specialist == 'none' ? 'selected' : '' }}>Select Specialist</option>
+                                                    <option value="pediatricians" {{ $doctor->specialist == 'pediatricians' ? 'selected' : '' }}>Pediatricians</option>
+                                                    <option value="allergists" {{ $doctor->specialist == 'allergists' ? 'selected' : '' }}>Allergists</option>
+                                                    <option value="dermatologists" {{ $doctor->specialist == 'dermatologists' ? 'selected' : '' }}>Dermatologists</option>
                                             </select>
 
                                             @error('specialist')
@@ -74,7 +70,7 @@
                                     <div class="flex mt-6">
                                         <div class="flex-1 mr-4">
                                             <label for="phone" class="formLabel">Phone</label>
-                                            <input type="tel" name="phone" class="formInput" value="{{ old('phone') }}">
+                                            <input type="tel" name="phone" class="formInput" value="{{ $doctor->phone }}">
 
                                             @error('phone')
                                                 <p class="text-red-700 text-sm">{{ $message }}</p>
@@ -83,7 +79,7 @@
 
                                         <div class="flex-1 mr-4">
                                             <label for="email" class="formLabel">Email</label>
-                                            <input type="email" name="email" class="formInput" value="{{ old('email') }}">
+                                            <input type="email" name="email" class="formInput" value="{{ $doctor->email }}">
 
                                             @error('email')
                                                 <p class="text-red-700 text-sm">{{ $message }}</p>
@@ -94,7 +90,7 @@
                                     <div class="flex mt-6 justify-between">
                                         <div class="flex-1">
                                             <label for="room" class="formLabel">Room No</label>
-                                            <input type="number" name="room" class="formInput" value="{{ old('room') }}">
+                                            <input type="number" name="room" class="formInput" value="{{ $doctor->room }}">
 
                                             @error('room')
                                                 <p class="text-red-700 text-sm">{{ $message }}</p>
@@ -107,14 +103,23 @@
                                                 to upload image</label>
                                             <input type="file" name="docimage" id="docimage" class="formInput hidden">
 
-                                            @error('docimage')
-                                                <p class="text-red-700 text-sm">{{ $message }}</p>
-                                            @enderror
+                                            @php
+                                                function getImageUrl($image) {
+                                                    if(str_starts_with($image, 'http')) {
+                                                        return $image;
+                                                    }
+                                                    return asset('storage/uploads') . '/' . $image;
+                                                }
+                                            @endphp
+
+                                            <div class="w-full">
+                                                <img src="{{ getImageUrl($doctor->docimage) }}" alt="" class="rounded w-28 h-28">
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="mt-6">
-                                        <button type="submit" class="px-8 py-2 text-base uppercase bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-all">Create</button>
+                                        <button type="submit" class="px-8 py-2 text-base uppercase bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-all">Update</button>
                                     </div>
 
                                 </form>

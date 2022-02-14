@@ -24,7 +24,7 @@
             <div class="content-wrapper">
                 <div>
                     <div class="flex justify-between">
-                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        <h2 class="font-semibold text-xl text-gray-800 leading-tight add-class">
                             {{ __('Add New Appointment') }}
                         </h2>
                         <a href=""class="border border-emerald-400 px-3 py-1">Back</a>
@@ -95,8 +95,9 @@
                                                 </td>
                                                 <td class="border py-2 px-1 text-center">
                                                     <div class="flex justify-center">
-                                                        <a href="{{ route('appointment-approved', $appointment->id) }}" class="text-white bg-emerald-800 px-3 py-1 mr-2">Approved</a>
+                                                        <a href="{{ route('appointment-approved', $appointment->id) }}" class="text-white bg-red-600 px-3 py-1 mr-2">Approved</a>
                                                         <a href="{{ route('appointment-cancelled', $appointment->id) }}" class="text-white bg-emerald-800 px-3 py-1 mr-2">Cancelled</a>
+                                                        <a href="{{ route('appointment-email', $appointment->id) }}" class="text-white bg-emerald-800 px-3 py-1 mr-2">Send Mail</a>
                                                     </div>
                                                 </td>
                                             </tr>

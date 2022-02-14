@@ -1874,6 +1874,16 @@ select {
   line-height: 2rem;
   font-weight: 700;
 }
+.add-class {
+  margin-bottom: 0.25rem;
+  display: block;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
 .formInput {
   width: 100%;
   border-radius: 0.125rem;

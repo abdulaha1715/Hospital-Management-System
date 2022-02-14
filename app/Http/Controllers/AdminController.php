@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Doctor;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AppointmentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -20,22 +23,61 @@ class AdminController extends Controller
     }
 
     public function all_doctors() {
-        return view('admin.all-doctors');
+        $doctors = Doctor::all();
+
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.all-doctors')->with([
+                    'doctors' => $doctors
+                ]);
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
     }
 
     public function add_doctor_view() {
-        return view('admin.add-doctor');
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.add-doctor');
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
+
     }
 
     public function all_appointments() {
         $appointments = Appointment::all();
-        return view('admin.all-appointments')->with([
-            'appointments' => $appointments
-        ]);
+
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.all-appointments')->with([
+                    'appointments' => $appointments
+                ]);
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
     }
 
     public function add_appointment_view() {
-        return view('admin.add-appointment');
+
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.add-appointment');
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
     }
 
     public function appointment_approved($id) {
@@ -100,7 +142,97 @@ class AdminController extends Controller
             'docimage'   => $docimage,
         ]);
 
-        return redirect()->back()->with('success', "Doctor Added Successfully!");
+        return redirect()->route('all-doctors')->with('success', "Doctor Added Successfully!");
+    }
+
+
+    public function edit_doctor_info($id) {
+        $doctor = Doctor::find($id);
+
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.edit-doctor')->with([
+                    'doctor' => $doctor
+                ]);
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
+    }
+
+    public function update_doctor_info(Request $request, Doctor $doctor) {
+
+        $request->validate([
+            'name'       => ['required', 'max:255', 'string'],
+            'phone'      => ['max:255', 'string'],
+            'email'      => ['max:255', 'string', 'email',],
+            'room'       => ['max:255', 'string'],
+            'docimage'   => ['image'],
+        ]);
+
+        $image = $doctor->docimage;
+
+        if ( !empty($request->file('docimage')) ) {
+
+            Storage::delete('public/uploads/'.$image);
+
+            $image = time() . '-' . $request->file('docimage')->getClientOriginalName();
+
+            $request->file('docimage')->storeAs('public/uploads', $image);
+        }
+
+        Doctor::find($request->id)->update([
+            'name'       => $request->name,
+            'specialist' => $request->specialist,
+            'phone'      => $request->phone,
+            'email'      => $request->email,
+            'room'       => $request->room,
+            'docimage'   => $image,
+        ]);
+
+        return redirect()->route('all-doctors')->with('success', "Doctor Info Updated");
+    }
+
+    public function delete_doctor_info($id) {
+        $doctor = Doctor::find($id);
+
+        $doctor->delete();
+
+        return redirect()->back()->with('success', "Doctor Deleted Successfully!");
+    }
+
+    public function appointment_email_text($id) {
+        $appoinment = Appointment::find($id);
+
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.appointment-email')->with([
+                    'appoinment' => $appoinment
+                ]);
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
+    }
+
+    public function send_appointment_email(Request $request, $id) {
+        $appoinment = Appointment::find($id);
+
+        $details = [
+            'greeting'   => $request->greeting,
+            'email_body' => $request->email_body,
+            'actiontext' => $request->actiontext,
+            'actionurl'  => $request->actionurl,
+            'endpoint'   => $request->endpoint,
+        ];
+
+        Notification::send($appoinment, new AppointmentNotification($details));
+
+        return redirect()->route('all-appointments')->with('success', "Email Send!");
     }
 
     /**
@@ -132,10 +264,10 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.

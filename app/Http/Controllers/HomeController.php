@@ -72,7 +72,7 @@ class HomeController extends Controller
             'user_id'    => $user_id
         ]);
 
-        return redirect()->back()->with('appsuccess', "Appoinment Added!");
+        return redirect()->back()->with('appsuccess', "Appoinment successfully Added! We will contact with you soon.");
 
     }
 
