@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\AppointmentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -23,24 +24,60 @@ class AdminController extends Controller
 
     public function all_doctors() {
         $doctors = Doctor::all();
-        return view('admin.all-doctors')->with([
-            'doctors' => $doctors
-        ]);
+
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.all-doctors')->with([
+                    'doctors' => $doctors
+                ]);
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
     }
 
     public function add_doctor_view() {
-        return view('admin.add-doctor');
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.add-doctor');
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
+
     }
 
     public function all_appointments() {
         $appointments = Appointment::all();
-        return view('admin.all-appointments')->with([
-            'appointments' => $appointments
-        ]);
+
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.all-appointments')->with([
+                    'appointments' => $appointments
+                ]);
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
     }
 
     public function add_appointment_view() {
-        return view('admin.add-appointment');
+
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.add-appointment');
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
     }
 
     public function appointment_approved($id) {
@@ -111,9 +148,18 @@ class AdminController extends Controller
 
     public function edit_doctor_info($id) {
         $doctor = Doctor::find($id);
-        return view('admin.edit-doctor')->with([
-            'doctor' => $doctor
-        ]);
+
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.edit-doctor')->with([
+                    'doctor' => $doctor
+                ]);
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
     }
 
     public function update_doctor_info(Request $request, Doctor $doctor) {
@@ -159,9 +205,18 @@ class AdminController extends Controller
 
     public function appointment_email_text($id) {
         $appoinment = Appointment::find($id);
-        return view('admin.appointment-email')->with([
-            'appoinment' => $appoinment
-        ]);
+
+        if (Auth::id()) {
+            if ( Auth::user()->usertype == 2 ) {
+                return view('admin.appointment-email')->with([
+                    'appoinment' => $appoinment
+                ]);
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
     }
 
     public function send_appointment_email(Request $request, $id) {

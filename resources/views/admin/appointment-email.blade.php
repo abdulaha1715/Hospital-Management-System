@@ -49,7 +49,7 @@
 
                                         <div class="flex-1 mr-4">
                                             <label for="email_body" class="formLabel">Email Body</label>
-                                            <input type="text" name="email_body" class="formInput" value="Your Appointment with Dr. {{ $appoinment->doctor }} is Confirmed.">
+                                            <input type="text" name="email_body" class="formInput" value="In date {{ $appoinment->appdate }} Your Appointment with Dr. {{ $appoinment->doctor }} is Confirmed.">
                                         </div>
                                     </div>
 

@@ -46,7 +46,7 @@ Route::post('/doctor-update/{id}', [AdminController::class, 'update_doctor_info'
 Route::get('/delete-doctor/{id}', [AdminController::class, 'delete_doctor_info'])->name('delete-doctor');
 
 Route::get('/all-appointments', [AdminController::class, 'all_appointments'])->name('all-appointments');
-Route::get('/add-new-appointment', [AdminController::class, 'add_appointment_view'])->name('add-new-appointment');
+// Route::get('/add-new-appointment', [AdminController::class, 'add_appointment_view'])->name('add-new-appointment');
 Route::get('/appointment-approved/{id}', [AdminController::class, 'appointment_approved'])->name('appointment-approved');
 Route::get('/cancel-approved/{id}', [AdminController::class, 'appointment_cancelled'])->name('appointment-cancelled');
 
@@ -63,5 +63,5 @@ Route::post('/send-appointment-email/{id}', [AdminController::class, 'send_appoi
 // Route::resource('task', TaskController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.dashboard');
 })->name('dashboard');

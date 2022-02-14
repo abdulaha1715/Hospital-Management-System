@@ -58,7 +58,7 @@
             <span class="nav-link">Navigation</span>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{ route('dashboard') }}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
@@ -93,7 +93,7 @@
             <div class="collapse" id="appointment-items">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{ route('all-appointments') }}">All Appointments</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('add-new-appointment') }}">Add New Appointment</a></li>
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('add-new-appointment') }}">Add New Appointment</a></li> --}}
               </ul>
             </div>
           </li>
