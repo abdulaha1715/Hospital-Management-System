@@ -87,7 +87,7 @@
                                                 </td>
                                                 <td class="border py-2 px-1 text-center">
                                                     <div class="flex justify-center">
-                                                        <a href="{{ route('update-doctor', $doctor->id) }}" class="text-white bg-emerald-400 px-3 py-1 mr-2">Update</a>
+                                                        <a href="{{ route('edit-doctor', $doctor->id) }}" class="text-white bg-emerald-400 px-3 py-1 mr-2">Edit</a>
                                                         <a href="{{ route('delete-doctor', $doctor->id) }}" onclick="return confirm('Are you sure to delete this?')" class="text-white bg-red-500 hover:bg-red-600  px-3 py-1 mr-2">Delete</a>
                                                     </div>
                                                 </td>

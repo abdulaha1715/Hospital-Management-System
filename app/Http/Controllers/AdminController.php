@@ -103,12 +103,48 @@ class AdminController extends Controller
             'docimage'   => $docimage,
         ]);
 
-        return redirect()->back()->with('success', "Doctor Added Successfully!");
+        return redirect()->route('all-doctors')->with('success', "Doctor Added Successfully!");
     }
 
 
-    public function update_doctor_info() {
+    public function edit_doctor_info($id) {
+        $doctor = Doctor::find($id);
+        return view('admin.edit-doctor')->with([
+            'doctor' => $doctor
+        ]);
+    }
 
+    public function update_doctor_info(Request $request, Doctor $doctor) {
+
+        $request->validate([
+            'name'       => ['required', 'max:255', 'string'],
+            'phone'      => ['max:255', 'string'],
+            'email'      => ['max:255', 'string', 'email',],
+            'room'       => ['max:255', 'string'],
+            'docimage'   => ['image'],
+        ]);
+
+        $image = $doctor->docimage;
+
+        if ( !empty($request->file('docimage')) ) {
+
+            Storage::delete('public/uploads/'.$image);
+
+            $image = time() . '-' . $request->file('docimage')->getClientOriginalName();
+
+            $request->file('docimage')->storeAs('public/uploads', $image);
+        }
+
+        Doctor::find($request->id)->update([
+            'name'       => $request->name,
+            'specialist' => $request->specialist,
+            'phone'      => $request->phone,
+            'email'      => $request->email,
+            'room'       => $request->room,
+            'docimage'   => $image,
+        ]);
+
+        return redirect()->route('all-doctors')->with('success', "Doctor Info Updated");
     }
 
     public function delete_doctor_info($id) {
@@ -148,10 +184,10 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.

@@ -41,7 +41,8 @@ Route::get('/cancel-appointment/{id}', [HomeController::class, 'cancelAppointmen
 Route::get('/all-doctors', [AdminController::class, 'all_doctors'])->name('all-doctors');
 Route::get('/add-new-doctor', [AdminController::class, 'add_doctor_view'])->name('add-new-doctor');
 Route::post('/new-doctor-store', [AdminController::class, 'new_doctor_store'])->name('new-doctor-store');
-Route::get('/update-doctor/{id}', [AdminController::class, 'update_doctor_info'])->name('update-doctor');
+Route::get('/edit-doctor/{id}', [AdminController::class, 'edit_doctor_info'])->name('edit-doctor');
+Route::post('/doctor-update/{id}', [AdminController::class, 'update_doctor_info'])->name('doctor-update');
 Route::get('/delete-doctor/{id}', [AdminController::class, 'delete_doctor_info'])->name('delete-doctor');
 
 Route::get('/all-appointments', [AdminController::class, 'all_appointments'])->name('all-appointments');

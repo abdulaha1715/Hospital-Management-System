@@ -24,7 +24,7 @@
             <div class="content-wrapper">
                 <div>
                     <div class="flex justify-between">
-                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        <h2 class="font-semibold text-xl text-gray-800 leading-tight add-class">
                             {{ __('Add New Doctor') }}
                         </h2>
                         <a href=""class="border border-emerald-400 px-3 py-1">Back</a>
@@ -35,13 +35,6 @@
                     <div class="mx-auto sm:px-6 lg:px-8">
                         <div class="overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 border-b border-gray-200">
-
-                                @if (session()->has('success'))
-                                    <div class="alert alert-success alert-dismissible flex justify-between pr-4 text-xl align-items-center">
-                                        <strong>{{ session()->get('success') }}</strong>
-                                        <a href="#" class="close text-4xl" data-dismiss="alert" aria-label="close">&times;</a>
-                                    </div>
-                                @endif
 
                                 <form action="{{ route('new-doctor-store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
