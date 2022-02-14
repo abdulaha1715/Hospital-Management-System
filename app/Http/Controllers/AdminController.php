@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Doctor;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AppointmentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -153,6 +155,29 @@ class AdminController extends Controller
         $doctor->delete();
 
         return redirect()->back()->with('success', "Doctor Deleted Successfully!");
+    }
+
+    public function appointment_email_text($id) {
+        $appoinment = Appointment::find($id);
+        return view('admin.appointment-email')->with([
+            'appoinment' => $appoinment
+        ]);
+    }
+
+    public function send_appointment_email(Request $request, $id) {
+        $appoinment = Appointment::find($id);
+
+        $details = [
+            'greeting'   => $request->greeting,
+            'email_body' => $request->email_body,
+            'actiontext' => $request->actiontext,
+            'actionurl'  => $request->actionurl,
+            'endpoint'   => $request->endpoint,
+        ];
+
+        Notification::send($appoinment, new AppointmentNotification($details));
+
+        return redirect()->route('all-appointments')->with('success', "Email Send!");
     }
 
     /**
